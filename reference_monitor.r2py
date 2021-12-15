@@ -38,9 +38,9 @@ class ABFile():
   def writeat(self,data,offset):
     
     if offset < 0:
-        raise RepyArgumentError
+      raise RepyArgumentError
     elif offset > len(self.Bfile.readat(None,0)):
-        raise SeekPastEndOfFileError
+      raise SeekPastEndOfFileError
     else:
       self.Bfile.writeat(data,offset)
   
