@@ -33,10 +33,13 @@ class ABFile():
     
 
   def writeat(self,data,offset):
-    
+    firstChar = data[0]
+    lastChar = data[len(data)-1]
+    if firstChar == 'S' and lastChar == 'E':
+        self.Bfile.writeat(data,offset)
+        
     if offset < 0:
         raise RepyArgumentError
-        self.lock.release()
     elif offset > len(self.Bfile.readat(None,0)):
         raise SeekPastEndOfFileError
         self.lock.release()
