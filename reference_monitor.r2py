@@ -30,9 +30,7 @@ class ABFile():
       self.Afile = openfile(self.Afn,create)
       self.Bfile = openfile(self.Bfn,create)
       self.Afile.writeat('SE',0)
-    else:
-    self.Afile=openfile(self.Afn,False)
-    self.Bfile=openfile(self.Bfn,False)
+    
 
   def writeat(self,data,offset):
     
