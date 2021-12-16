@@ -54,13 +54,30 @@ class ABFile():
     else:
       #Try Reading the File else raise Exception
       try:
-        return self.Afile.readat(bytes,offset)
+        read = self.Afile.readat(bytes,offset)
+        return read
       except:
         raise RepyArgumentError
 
   def close(self):
-    self.Afile.close()
-    self.Bfile.close()
+    backup = self.Afile.readat(None,0)
+    data = self.Bfile.readat(None,0)
+    backupf = self.Afn
+    #Check if the written file starts with "S" and ends with "E"
+    if self.Bfile.readat(None,0).startswith("S") and self.Bfile.readat(None,0).endswith("E"):
+      #The Written File is Valid -> Discard Older Version
+      self.Afile.close()
+      self.Bfile.close()
+      removefile(self.Afn)
+      openfile(backupfile,True).writeat(data,0)
+      removefile(self.Bfn)
+    else:
+      #The Written File is Invalid Discard Invalid File
+      self.Afile.close()
+      self.Bfile.close()
+      removefile(self.Afn)
+      openfile(backupf,True).writeat(backup,0)
+      removefile(self.Bfn)
 
 
 def ABopenfile(filename, create):
