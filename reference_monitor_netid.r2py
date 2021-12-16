@@ -33,38 +33,25 @@ class ABFile():
     
 
   def writeat(self,data,offset):
-    #firstChar = data[0]
-    #lastChar = data[len(data)-1]
-    #if firstChar == 'S' and lastChar == 'E':
-        #self.Bfile.writeat(data,offset)
+    firstChar = data[0]
+    lastChar = data[len(data)-1]
+    if firstChar == 'S' and lastChar == 'E':
+        self.Bfile.writeat(data,offset)
         
-    #if offset < 0:
-        #raise RepyArgumentError
-    #elif offset > len(self.Bfile.readat(None,0)):
-        #raise SeekPastEndOfFileError
-        #self.lock.release()
-    #else:
-      #self.Bfile.writeat(data,offset)
-    start = len(data) 
-    end = len(self.Afile.readat(None, 0)) 
-    write = False 
-    if (offset == 0) and data[0] != 'S' 
-      write = False 
-    elif ((offset + start) >= end) and data[start - 1] != 'E': 
-      write = False 
-    else (write == True): 
-      self.Bfile.writeat(data, offset)
+    if offset < 0:
+        raise RepyArgumentError
+    elif offset > len(self.Bfile.readat(None,0)):
+        raise SeekPastEndOfFileError
+        self.lock.release()
+    else:
+      self.Bfile.writeat(data,offset)
   
   def readat(self,bytes,offset):
     # Read from the A file using the sandbox's readat...
-    return self.Afile.readat(bytes,offset)"""
-
+    return self.Afile.readat(bytes,offset)
 
   def close(self):
-    self.Afile.close() 
-    if self.Afn in listfiles(): 
-        removefile(self.Afn) 
-    self.Afile.close() 
+    self.Afile.close()
     self.Bfile.close()
 
 
