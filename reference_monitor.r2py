@@ -42,7 +42,21 @@ class ABFile():
   
   def readat(self,bytes,offset):
     # Read from the A file using the sandbox's readat...
-    return self.Afile.readat(bytes,offset)
+    length = len(self.Afile.readat(None,0))
+    if offset < 0 or length < 0:
+      raise RepyArgumentError
+    elif offset >= len(self.Afile.readat(None,0)):
+      raise SeekPastEndOfFileError
+    elif bytes > length and bytes != None:
+      raise SeekPastEndOfFileError
+    elif (len(self.Afile.readat(None,0)) < offset+length) and bytes != None:
+      raise RepyArgumentError
+    else:
+      #Try Reading the File else raise Exception
+      try:
+        return self.Afile.readat(bytes,offset)
+      except:
+        raise RepyArgumentError
 
   def close(self):
     self.Afile.close()
